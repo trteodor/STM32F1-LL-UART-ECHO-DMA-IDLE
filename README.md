@@ -1,4 +1,4 @@
-# RC522 Test
+# UART ECHO
 A simple program that allows you to receive characters of different lengths using UART. 
 The code is based on the LL libraries from ST. In C.
 
