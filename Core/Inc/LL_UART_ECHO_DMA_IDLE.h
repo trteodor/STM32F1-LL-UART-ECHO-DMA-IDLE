@@ -24,7 +24,7 @@ typedef struct __UART_DMA_Handle_Td
 	uint32_t UART_DMA_TX_CHANNEL;
 
 	bool Uart_ready_to_TX;
-	bool ubReceptionComplete;
+	bool Uart_RX_data_ready;
 
 	uint32_t ReceiveBufforSize;
 	uint32_t NbofRecData;
@@ -32,6 +32,8 @@ typedef struct __UART_DMA_Handle_Td
 
 	uint8_t *UART_DMA_TX_Buffer;
 	uint8_t *UART_DMA_RX_Buffer;	// DMA, UART BUFF
+
+	uint32_t LastMessageSendTimeStart;
 
 }UART_DMA_Handle_Td;;
 

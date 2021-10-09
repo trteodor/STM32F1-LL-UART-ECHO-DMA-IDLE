@@ -12,10 +12,10 @@ stm32f1xx_ll_dma.h:880:22:LL_DMA_SetDataLength	24	static
 stm32f1xx_ll_dma.h:902:26:LL_DMA_GetDataLength	16	static
 stm32f1xx_ll_dma.h:931:22:LL_DMA_ConfigAddresses	24	static
 stm32f1xx_ll_dma.h:1762:22:LL_DMA_EnableIT_TC	16	static
-LL_UART_ECHO_DMA_IDLE.c:13:6:Init_LL_USART_IDLE	24	static
-LL_UART_ECHO_DMA_IDLE.c:24:6:TUART_DMA_Trasmit	48	static
-LL_UART_ECHO_DMA_IDLE.c:59:6:StartTransfers	16	static
-LL_UART_ECHO_DMA_IDLE.c:69:6:Configure_DMA	40	static
-LL_UART_ECHO_DMA_IDLE.c:105:6:USART_IDLE_CallBack	16	static
-LL_UART_ECHO_DMA_IDLE.c:116:6:UART_DMA_ReceiveComplete_Callback	24	static
-LL_UART_ECHO_DMA_IDLE.c:126:6:UART_DMA_TransmitComplete_Callback	16	static
+LL_UART_ECHO_DMA_IDLE.c:15:6:Init_LL_USART_IDLE	48	static
+LL_UART_ECHO_DMA_IDLE.c:31:6:TUART_DMA_Trasmit	48	static
+LL_UART_ECHO_DMA_IDLE.c:71:6:StartTransfers	16	static
+LL_UART_ECHO_DMA_IDLE.c:81:6:Configure_DMA	40	static
+LL_UART_ECHO_DMA_IDLE.c:117:6:USART_IDLE_CallBack	16	static
+LL_UART_ECHO_DMA_IDLE.c:128:6:UART_DMA_ReceiveComplete_Callback	24	static
+LL_UART_ECHO_DMA_IDLE.c:137:6:UART_DMA_TransmitComplete_Callback	16	static

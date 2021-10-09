@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +58,8 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 UART_DMA_Handle_Td TUART2;
 uint8_t rx_BUF[1655];
+uint8_t tx_BUF[1000];
+uint16_t tx_Bsize=0;
 uint8_t ex_message[]="Hello Uart\n\r";
 /* USER CODE END 0 */
 
@@ -113,13 +115,24 @@ int main(void)
 		  LedTimer = HAL_GetTick();
 
 		  HAL_GPIO_TogglePin(LDG_GPIO_Port, LDG_Pin);
-		  TUART_DMA_Trasmit(&TUART2,ex_message, sizeof(ex_message)-1, 0);
+//		  TUART_DMA_Trasmit(&TUART2,ex_message, sizeof(ex_message)-1, 0);
 	  }
 	  //Echo response
-	  if(TUART2.ubReceptionComplete)
+	  if(TUART2.Uart_RX_data_ready)
 	  {
-		  TUART_DMA_Trasmit(&TUART2,TUART2.UART_DMA_RX_Buffer, TUART2.NbofRecData, 0);
-		  TUART2.ubReceptionComplete=false;
+		  strcpy((char *)tx_BUF,"Received:");
+
+		  uint16_t headerSize = sizeof("Received:")-1;
+
+		  for(int i=0; i< TUART2.NbofRecData; i++)
+		  {
+			  tx_BUF[headerSize+ i] = TUART2.UART_DMA_RX_Buffer[i];
+		  }
+		  tx_BUF[headerSize+ TUART2.NbofRecData] = '\n';
+		  tx_BUF[headerSize+ TUART2.NbofRecData+1] = '\r';
+		  tx_Bsize= headerSize+TUART2.NbofRecData+1;
+		  TUART_DMA_Trasmit(&TUART2,tx_BUF, tx_Bsize, 10);
+		  TUART2.Uart_RX_data_ready=0;
 	  }
 
 
