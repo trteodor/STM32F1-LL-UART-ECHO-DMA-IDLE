@@ -56,8 +56,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-
+UART_DMA_Handle_Td TUART2;
+uint8_t rx_BUF[1655];
+uint8_t ex_message[]="Hello Uart\n\r";
 /* USER CODE END 0 */
 
 /**
@@ -91,16 +92,36 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  Init_LL_USART_IDLE();
+
+  TUART2.Instance=USART2;
+  TUART2.UART_DMA_RX_CHANNEL=LL_DMA_CHANNEL_6;
+  TUART2.UART_DMA_TX_CHANNEL=LL_DMA_CHANNEL_7;
+  TUART2.ReceiveBufforSize=1655;
+  TUART2.UART_DMA_RX_Buffer=rx_BUF;
+
+  Init_LL_USART_IDLE(&TUART2);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(500);
-	  HAL_GPIO_TogglePin(LDG_GPIO_Port, LDG_Pin);
-	 // TUART_DMA_Trasmit(&TUART2,(uint8_t*) "EXAMPLES\n\r");
+	  static uint32_t LedTimer=0;
+	  if(LedTimer+500 < HAL_GetTick())
+	  {
+		  LedTimer = HAL_GetTick();
+
+		  HAL_GPIO_TogglePin(LDG_GPIO_Port, LDG_Pin);
+		  TUART_DMA_Trasmit(&TUART2,ex_message, sizeof(ex_message)-1, 0);
+	  }
+	  //Echo response
+	  if(TUART2.ubReceptionComplete)
+	  {
+		  TUART_DMA_Trasmit(&TUART2,TUART2.UART_DMA_RX_Buffer, TUART2.NbofRecData, 0);
+		  TUART2.ubReceptionComplete=false;
+	  }
+
 
     /* USER CODE END WHILE */
 

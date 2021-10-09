@@ -9,6 +9,7 @@
 #define INC_LL_UART_ECHO_DMA_IDLE_H_
 
 #include "main.h"
+#include <stdbool.h>
 
 
 //#define NbDataToReceive 25
@@ -22,11 +23,10 @@ typedef struct __UART_DMA_Handle_Td
 	uint32_t UART_DMA_RX_CHANNEL;
 	uint32_t UART_DMA_TX_CHANNEL;
 
-	uint8_t ubTransmissionComplete;
-	uint8_t ubReceptionComplete;
+	bool Uart_ready_to_TX;
+	bool ubReceptionComplete;
 
-	uint32_t ubNbDataToTransmit;
-	uint32_t NbDataToReceive;
+	uint32_t ReceiveBufforSize;
 	uint32_t NbofRecData;
 
 
@@ -38,7 +38,7 @@ typedef struct __UART_DMA_Handle_Td
 extern UART_DMA_Handle_Td TUART2;
 
 extern void TUART_END_RECEIVE_CALLBACK(UART_DMA_Handle_Td *USARTX);
-extern void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf);
+extern void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size,uint32_t timeout );
 
 extern void USART_IDLE_CallBack(UART_DMA_Handle_Td *USARTX);
 extern void Init_LL_USART_IDLE();
