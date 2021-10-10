@@ -28,7 +28,7 @@ void Init_LL_USART_IDLE(UART_DMA_Handle_Td *USARTX)
 	LL_DMA_EnableChannel(DMA1, USARTX->UART_DMA_TX_CHANNEL);
 }
 
-void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size, uint32_t timeout)
+Uart_State TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size, uint32_t timeout)
 {
 	timeout=HAL_GetTick()+timeout;
 
@@ -45,7 +45,7 @@ void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size
 	}
 	if(HAL_GetTick() < USARTX->LastMessageSendTimeStart+MinimumTimeBeetweenNextMessages)
 	{
-		return;
+		return UART_Error; //error
 	}
 	USARTX->LastMessageSendTimeStart = HAL_GetTick();
 
@@ -65,7 +65,7 @@ void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size
 
 		LL_DMA_EnableChannel(DMA1, USARTX->UART_DMA_TX_CHANNEL);
 	}
-
+return UART_Ok; //alls ok
 }
 
 void StartTransfers(UART_DMA_Handle_Td *USARTX)

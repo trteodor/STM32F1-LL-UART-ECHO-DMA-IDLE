@@ -15,6 +15,11 @@
 //#define NbDataToReceive 25
 #define UART_DMA_BUFF_SIZE      256
 
+typedef enum
+{
+	UART_Ok,
+	UART_Error
+}Uart_State;
 
 typedef struct __UART_DMA_Handle_Td
 {
@@ -40,7 +45,7 @@ typedef struct __UART_DMA_Handle_Td
 extern UART_DMA_Handle_Td TUART2;
 
 extern void TUART_END_RECEIVE_CALLBACK(UART_DMA_Handle_Td *USARTX);
-extern void TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size,uint32_t timeout );
+extern Uart_State TUART_DMA_Trasmit(UART_DMA_Handle_Td *USARTX, uint8_t *txBuf, uint16_t size,uint32_t timeout );
 
 extern void USART_IDLE_CallBack(UART_DMA_Handle_Td *USARTX);
 extern void Init_LL_USART_IDLE();

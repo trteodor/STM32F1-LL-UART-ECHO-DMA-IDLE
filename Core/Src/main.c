@@ -130,8 +130,14 @@ int main(void)
 		  }
 		  tx_BUF[headerSize+ TUART2.NbofRecData] = '\n';
 		  tx_BUF[headerSize+ TUART2.NbofRecData+1] = '\r';
-		  tx_Bsize= headerSize+TUART2.NbofRecData+1;
-		  TUART_DMA_Trasmit(&TUART2,tx_BUF, tx_Bsize, 10);
+		  tx_Bsize= headerSize+TUART2.NbofRecData+2;
+		  if(TUART_DMA_Trasmit(&TUART2,tx_BUF, tx_Bsize, 10)!= UART_Ok)
+		  {
+			  //error detected
+//			  while(1); //dk, wdg should reset MCU for example
+			  //Anyway error detected
+		  }
+
 		  TUART2.Uart_RX_data_ready=0;
 	  }
 
